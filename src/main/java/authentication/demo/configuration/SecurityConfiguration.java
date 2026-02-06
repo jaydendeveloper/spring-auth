@@ -9,10 +9,16 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
      @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/public/**", "/actuator/health", "/error").permitAll()
+                    .requestMatchers("/api/users").hasRole("ADMIN")
+                    .requestMatchers("/api/users/**").hasRole("USER")
+                    .requestMatchers("/api/**").authenticated()
+                    .anyRequest().denyAll()
+                )
                 .httpBasic(Customizer.withDefaults())
                 .build();
     }
