@@ -14,7 +14,7 @@ public class InMemoryDataAccess implements UserDataAccess {
 
     public InMemoryDataAccess() {
         users.add(new User("johndoe", "Password123", "john@example.com", "USER"));
-        users.add(new User("janesmith", "Password123", "jane@example.com", "USER"));
+        users.add(new User("janesmith", "Password123", "jane@example.com", "ADMIN"));
     }
 
     @Override
